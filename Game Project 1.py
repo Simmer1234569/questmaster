@@ -1,11 +1,13 @@
 from logging import raiseExceptions
 from turtle import end_fill
 
-
 name = input('Enter your name.')
 print('Remember to type in LOWERCASE ONLY!!!')
 money = 500
 health = 10
+if health <= 0:
+    print("You died")
+    exit()
 attackpower = 1
 print('Welcome ' + name + ' I am the questmaster and I will be the one helping you find your quest.')
 print('You have $500, 10 health,and 1 attack power.')
@@ -22,6 +24,59 @@ print('Ok! Now that you have your gear, let me explain to you what first quest i
 print('You will be visitng either the old dungeon in austin, or you could go to the new, allegedly, haunted dungeon just outside Washington D.C. Then you will have to search for the secret jewel, that are rumoured to be hidden in both places.')
 print('The one in Austin is bigger and will take more time, but it has less hostile creatures inside. The one in Washington D.C however is the exact opposite and will take less timne to explore but will require more stregnth. Food is easier to find in Washington D.C.')
 location = input('Enter austin if you want to visit the dungeon in Austin. Enter washington if you want to choose the dungeon in washington DC.')
+if location == 'washington':
+    print('You have chosen the haunted dungeon in Washington D.C. You will have to search for the secret jewel in this dungeon.')
+    print('The flight will cost you $50, you now have $' + str(money - 50) +'. You enter the dungeon and you see a door that is locked. You will have to find the key to unlock it.')
+    key = input('Enter key if you want to find the key. Enter nothing if you do not want to find the key. It will cost you $20 if you want to search for the key.')
+    if key == 'key':
+        money = (money - 20)
+        #randomize if they can find the key
+        import random
+        random_number = random.randint(1, 10)
+        if random_number == 1:
+            print('You found the key! You unlock the door and you enter the dungeon.')
+            money = (money + 100)
+            print('You open the door and you see a chest. You try the same key and it works. There are $100 in the chest. You now have $' + str(money + 100) + '.')
+        else:
+            print('You did not find the key.')
+    print('You continue your search and find a note saying that the jewel is not here in this dungeon, the note says it is outside the dungeon.')
+    leave = input('Do you want to listen to the note and search outside the dungeon? Enter yes if you want to search outside the dungeon. Enter no if you do not want to search outside the dungeon. Enter leave if you want to quit the quest altogether.')
+    if leave == 'yes':
+        print('You have been ambushed by a group of ghosts! You lose 10 health.')
+        health = (health - 10)       
+        print('You now have ' + str(health) + ' health.')
+        #if their health is lower than 0, they lose
+        if health <= 0:
+            print('You have lost the game.')
+            raise SystemExit
+        print('After the attack you wake up and you find the secret jewel, congrats.')
+        #won the game
+        print('You have won the game!')
+        print('You have $' + str(money) + ' and ' + str(health) + ' health.')
+        print('Thank you for playing!')
+    if leave == 'leave':
+        #end game
+        print('You have left the quest.')
+        raise SystemExit
+    if leave == 'no':
+        print('You have chosen to not search outside the dungeon.')
+        health = (health - 1)
+        print('You get hungry and lose one health. You now have ' + str(health) + ' health.')
+        doory = input('You find a door. Do you want to open it? Enter yes if you want to open it. Enter no if you do not want to open it.')
+        if doory == 'yes':
+            print('You open the door and you find the secret jewel, congrats.')
+            #won the game
+            print('You have won the game!')
+            print('You have $' + str(money) + ' and ' + str(health) + ' health.')
+            print('Thank you for playing!')
+            #end game
+            raise SystemExit
+        if doory == 'no':
+            print('You continue on for a while and then hear a voice. The voice gets closer and closer and you look forward. There is nothing there. ')
+            print('You got a slight glance at your assasin when you looked back, but you fall down and die.')
+            health = 0
+            print('You have lost the game.')
+#seperate location
 if location == 'austin':
     money = (money - 50)
     print('Ok, you take a flight to Austin which costs you $50, you now have $ ' + str(money) + '. You enter the dungeon and find a lamp on the other side, do you want to go and pick that up?')
